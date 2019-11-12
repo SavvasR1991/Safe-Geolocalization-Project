@@ -1,0 +1,200 @@
+The Base of the Triangular Pyramid of Shape 1 is :
+A = [-3.0,-3.0 ,0.0]
+B = [ 0.0 , 4.0 , 0.0]
+C = [ 3.0 , -4.0 , 0.0]
+The unknown Node has    D  = [ 0.0 , 0.0 , 1.74]
+The length of A,D is  |AD| = [ 4.585586113028519]
+The length of B,D is  |BD| = [ 4.362063731767338]
+The length of C,D is  |CD| = [ 5.294109934634905]
+The algorithm calcuted: D =  [ 6.661338147750939e-16,2.220446049250313e-16 ,-1.7399999999999987 ]
+
+The Base of the Triangular Pyramid of Shape 2 is :
+A = [-4.0,-4.0 ,0.0]
+B = [ 7.43 , -2.68 , 0.0]
+C = [ -3.24 , 3.81 , 0.0]
+The unknown Node has    D  = [ 0.0 , 0.0 , 8.0]
+The length of A,D is  |AD| = [ 9.797958971132712]
+The length of B,D is  |BD| = [ 11.242210636703085]
+The length of C,D is  |CD| = [ 9.434707202664002]
+The algorithm calcuted: D =  [ 2.220446049250313e-16,-4.440892098500626e-16 ,7.999999999999999 ]
+
+The Base of the Triangular Pyramid of Shape 3 is :
+A = [-3.0,-3.0 ,0.0]
+B = [ 0.0 , 0.0 , 0.0]
+C = [ -3.0 , 3.0 , 0.0]
+The unknown Node has    D  = [ 0.0 , 0.0 , 5.0]
+The length of A,D is  |AD| = [ 6.557438524302]
+The length of B,D is  |BD| = [ 5.0]
+The length of C,D is  |CD| = [ 6.557438524302]
+The algorithm calcuted: D =  [ -1.4802973661668757e-15,-2.960594732333751e-16 ,5.0 ]
+
+The Base of the Triangular Pyramid of Shape 4 is :
+A = [10.97,-14.04 ,0.0]
+B = [ 10.0 , 20.0 , 0.0]
+C = [ -20.0 , 10.0 , 0.0]
+The unknown Node has    D  = [ 0.0 , 0.0 , 30.0]
+The length of A,D is  |AD| = [ 34.89215527880157]
+The length of B,D is  |BD| = [ 37.416573867739416]
+The length of C,D is  |CD| = [ 37.416573867739416]
+The algorithm calcuted: D =  [ 1.7763568394002505e-15,1.5543122344752192e-15 ,30.000000000000004 ]
+
+The Base of the Triangular Pyramid of Shape 5 is :
+A = [-100.0,80.0 ,0.0]
+B = [ 40.0 , -80.0 , 0.0]
+C = [ 155.59 , 180.35 , 0.0]
+The unknown Node has    D  = [ 0.0 , 0.0 , 148.94]
+The length of A,D is  |AD| = [ 196.42587304120605]
+The length of B,D is  |BD| = [ 173.73290879968596]
+The length of C,D is  |CD| = [ 280.92257687839896]
+The algorithm calcuted: D =  [ 3.197442310920451e-14,3.019806626980426e-14 ,148.94 ]
+
+The Base of the Triangular Pyramid of Shape 6 is :
+A = [2.67,2.97 ,0.0]
+B = [ -2.82 , 1.08 , 0.0]
+C = [ 1.33 , -2.33 , 0.0]
+The unknown Node has    D  = [ 0.0 , 0.0 , 1.0]
+The length of A,D is  |AD| = [ 4.117013480667753]
+The length of B,D is  |BD| = [ 3.1810061301418453]
+The length of C,D is  |CD| = [ 2.8631800502238764]
+The algorithm calcuted: D =  [ 2.220446049250313e-16,-2.220446049250313e-16 ,0.9999999999999998 ]
+
+The Base of the Triangular Pyramid of Shape 7 is :
+A = [2.67,2.97 ,0.0]
+B = [ -2.82 , 1.08 , 0.0]
+C = [ 1.33 , -2.33 , 0.0]
+The unknown Node has    D  = [ 0.0 , 0.0 , 4.0]
+The length of A,D is  |AD| = [ 5.652415412900931]
+The length of B,D is  |BD| = [ 5.011865919994269]
+The length of C,D is  |CD| = [ 4.8164094510329996]
+The algorithm calcuted: D =  [ 0.0,4.440892098500626e-16 ,3.9999999999999996 ]
+
+The Base of the Triangular Pyramid of Shape 8 is :
+A = [-3.0,-2.0 ,0.0]
+B = [ -3.0 , 3.0 , 0.0]
+C = [ -1.0 , 2.0 , 0.0]
+The unknown Node has    D  = [ 0.0 , 0.0 , 4.0]
+The length of A,D is  |AD| = [ 5.385164807134504]
+The length of B,D is  |BD| = [ 5.830951894845301]
+The length of C,D is  |CD| = [ 4.58257569495584]
+The algorithm calcuted: D =  [ 0.0,-4.440892098500626e-16 ,-4.0 ]
+
+The Base of the Triangular Pyramid of Shape 9 is :
+A = [4.0,-6.0 ,0.0]
+B = [ 4.0 , 5.0 , 0.0]
+C = [ 6.0 , 0.0 , 0.0]
+The unknown Node has    D  = [ 0.0 , 0.0 , 4.0]
+The length of A,D is  |AD| = [ 8.246211251235321]
+The length of B,D is  |BD| = [ 7.54983443527075]
+The length of C,D is  |CD| = [ 7.211102550927978]
+The algorithm calcuted: D =  [ 1.7763568394002505e-15,0.0 ,-4.000000000000002 ]
+
+The Base of the Triangular Pyramid of Shape 10 is :
+A = [2.12,5.85 ,0.0]
+B = [ 2.0 , 2.0 , 0.0]
+C = [ 5.95 , 6.17 , 0.0]
+The unknown Node has    D  = [ 0.0 , 0.0 , 5.0]
+The length of A,D is  |AD| = [ 7.982286639804411]
+The length of B,D is  |BD| = [ 5.744562646538029]
+The length of C,D is  |CD| = [ 9.923275668850483]
+The algorithm calcuted: D =  [ -2.220446049250313e-16,-1.609823385706477e-15 ,4.999999999999998 ]
+
+The Base of the Triangular Pyramid of Shape 11 is :
+A = [-1.39,-1.97 ,0.0]
+B = [ -2.13 , 1.92 , 0.0]
+C = [ 1.0 , -1.0 , 0.0]
+The unknown Node has    D  = [ 2.0 , 2.0 , 3.0]
+The length of A,D is  |AD| = [ 6.021046420681374]
+The length of B,D is  |BD| = [ 5.105222815901378]
+The length of C,D is  |CD| = [ 4.358898943540674]
+The algorithm calcuted: D =  [ 1.9999999999999973,1.9999999999999982 ,-3.0000000000000036 ]
+
+The Base of the Triangular Pyramid of Shape 12 is :
+A = [2.53,-2.02 ,-2.0]
+B = [ 0.85 , 3.09 , 1.0]
+C = [ -3.0 , 0.0 , 0.0]
+The unknown Node has    D  = [ -2.0 , 2.0 , 4.0]
+The length of A,D is  |AD| = [ 8.525332838077349]
+The length of B,D is  |BD| = [ 4.279088688026926]
+The length of C,D is  |CD| = [ 4.58257569495584]
+The algorithm calcuted: D =  [ -1.9999999999999978,1.9999999999999993 ,4.000000000000001 ]
+
+The Base of the Triangular Pyramid of Shape 13 is :
+A = [-60.0,-60.0 ,20.0]
+B = [ -41.26 , 21.35 , -10.0]
+C = [ -10.0 , -30.0 , -10.0]
+The unknown Node has    D  = [ 20.0 , 20.0 , 60.0]
+The length of A,D is  |AD| = [ 120.0]
+The length of B,D is  |BD| = [ 93.03015693848957]
+The length of C,D is  |CD| = [ 91.10433579144299]
+The algorithm calcuted: D =  [ -47.10824925290018,-20.853045212184195 ,-92.70012730035116 ]
+
+The Base of the Triangular Pyramid of Shape 14 is :
+A = [0.0,0.0 ,-2.0]
+B = [ 7.0 , 6.0 , 0.0]
+C = [ 1.0 , 6.0 , 0.0]
+The unknown Node has    D  = [ 0.0 , 0.0 , 5.0]
+The length of A,D is  |AD| = [ 7.0]
+The length of B,D is  |BD| = [ 10.488088481701515]
+The length of C,D is  |CD| = [ 7.874007874011811]
+The algorithm calcuted: D =  [ -1.1479488724499111e-15,0.0 ,5.000000000000002 ]
+
+The Base of the Triangular Pyramid of Shape 15 is :
+A = [0.0,0.0 ,-2.0]
+B = [ 7.0 , 6.0 , 0.0]
+C = [ 1.0 , 6.0 , 0.0]
+The unknown Node has    D  = [ 0.0 , 0.0 , 50.0]
+The length of A,D is  |AD| = [ 52.0]
+The length of B,D is  |BD| = [ 50.84289527554464]
+The length of C,D is  |CD| = [ 50.368641037852115]
+The algorithm calcuted: D =  [ 3.867271868015017e-14,-1.0658141036401503e-14 ,50.000000000000014 ]
+
+The Base of the Triangular Pyramid of Shape 16 is :
+A = [0.0,0.0 ,-20.0]
+B = [ 40.0 , 20.0 , 0.0]
+C = [ -51.33 , 10.63 , 0.0]
+The unknown Node has    D  = [ 100.0 , 0.0 , 50.0]
+The length of A,D is  |AD| = [ 122.06555615733703]
+The length of B,D is  |BD| = [ 80.62257748298549]
+The length of C,D is  |CD| = [ 159.73029080296573]
+The algorithm calcuted: D =  [ 99.99999999999999,0.0 ,50.00000000000003 ]
+
+The Base of the Triangular Pyramid of Shape 17 is :
+A = [20.0,0.0 ,0.0]
+B = [ 0.0 , 50.0 , 0.0]
+C = [ -3.0 , 0.0 , 0.0]
+The unknown Node has    D  = [ 0.0 , 5.0 , 200.0]
+The length of A,D is  |AD| = [ 201.05969262883102]
+The length of B,D is  |BD| = [ 205.0]
+The length of C,D is  |CD| = [ 200.08498194517247]
+The algorithm calcuted: D =  [ -3.161915174132446e-13,4.999999999999946 ,200.0 ]
+
+The Base of the Triangular Pyramid of Shape 18 is :
+A = [0.0,-3.0 ,0.0]
+B = [ 2.0 , 2.0 , 0.0]
+C = [ -2.5 , 2.08 , 0.0]
+The unknown Node has    D  = [ 0.0 , 0.0 , 5.0]
+The length of A,D is  |AD| = [ 5.830951894845301]
+The length of B,D is  |BD| = [ 5.744562646538029]
+The length of C,D is  |CD| = [ 5.964595543706212]
+The algorithm calcuted: D =  [ 0.0,-3.3306690738754696e-16 ,5.0 ]
+
+The Base of the Triangular Pyramid of Shape 19 is :
+A = [0.0,-3.0 ,0.0]
+B = [ 2.0 , 2.0 , 0.0]
+C = [ -2.5 , 2.08 , 0.0]
+The unknown Node has    D  = [ 10.0 , -10.0 , 10.0]
+The length of A,D is  |AD| = [ 15.7797338380595]
+The length of B,D is  |BD| = [ 17.549928774784245]
+The length of C,D is  |CD| = [ 20.054336189462866]
+The algorithm calcuted: D =  [ 9.999999999999998,-10.000000000000004 ,9.999999999999996 ]
+
+The Base of the Triangular Pyramid of Shape 20 is :
+A = [0.0,0.0 ,0.0]
+B = [ 1.0 , 0.0 , 0.0]
+C = [ 0.0 , 1.0 , 0.0]
+The unknown Node has    D  = [ 0.0 , 0.0 , 1.0]
+The length of A,D is  |AD| = [ 1.0]
+The length of B,D is  |BD| = [ 1.4142135623730951]
+The length of C,D is  |CD| = [ 1.4142135623730951]
+The algorithm calcuted: D =  [ -2.220446049250313e-16,-2.220446049250313e-16 ,1.0 ]
+
