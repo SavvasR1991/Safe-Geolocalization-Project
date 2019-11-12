@@ -1,0 +1,32 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+../Include/List.h
+iostream
+-
+cstdlib
+-
+
+../Include/List2.h
+iostream
+-
+cstdlib
+-
+
+../Include/RandomWalk.h
+List.h
+../Include/List.h
+List2.h
+../Include/List2.h
+
+/home/savvas/Downloads/Random_Walk/RandomWalk/src/main.cpp
+iostream
+-
+RandomWalk.h
+/home/savvas/Downloads/Random_Walk/RandomWalk/src/RandomWalk.h
+

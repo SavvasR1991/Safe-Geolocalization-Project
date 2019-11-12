@@ -1,0 +1,53 @@
+This is a c++ program to calculate an unkwown node coordinate D(x,y,z) from the top of a triagular pyramid. 
+
+(A) The inputs are:
+    1. The coordinates of the base of the pyramid
+            a.A(xa,ya,za)
+            b.B(xb,yb,zb)
+            c.C(xc,yc,zc)
+    2.The vector length of the point D to the other points.
+            a.|AD|
+            b.|BD|
+            c.|CD|
+    
+    The inputs are readen from the Folder Tests. The coordinates of D are given so the vector lengths are calculated and also for the output of the algorithm to be compared with the actuall coordinates of the unknown node D.
+    
+(B) The outputs are written to the folder Results.There is also explanation of the code execution in the console outputs.
+
+(C) To run this project:
+    1.Open a terminal in the folder: Node Localization
+    2.Run command ./Run
+    3.For clean up run command ./Run clean
+    
+    
+(D) Example:
+    1.Input:
+        a.A = -3 -3 0
+        b.B = 0 0 0
+        c.C = -3 3 0
+        d.D = 0 0 5
+        
+    2.Execution:
+        a.|AD| =  6.55744 is calculated
+        b.|BD| =  5       is calculated
+        c.|CD| =  6.55744 is calculated
+        d. D'  = [-1.18424e-15 , 0 , 5] is calculated
+        e. D' is rounding with epsilon = 0.000001 
+           D'  = rounding([-1.18424e-15 , 0 , 5]) = [0 0 5] 
+        f.Compare D' with D
+        
+     3.Output:
+        The Base of the Triangular Pyramid of Shape 3 is :
+        A = [ -3 , -3 , 0]
+        B = [ 0 , 0 , 0]
+        C = [ -3 , 3 , 0]
+        The unknown Node has    D  = [ 0 , 0 , 5]
+        The length of A,D is  |AD| = [ 6.55744]
+        The length of B,D is  |BD| = [ 5]
+        The length of C,D is  |CD| = [ 6.55744]
+        The algorithm calcuted: D' = [ -1.18424e-15 , 0 , 5]
+
+(E) You can see the pyramids real shapes in the Folder Shapes
+
+
+@Author Savvas Rostantis

@@ -1,0 +1,64 @@
+The Base of the Triangular Pyramid of Shape 1 is :
+A = [ -3 , -3 , 0]
+B = [ 0 , 4 , 0]
+C = [ 3 , -4 , 0]
+The unknown Node has    D  = [ 0 , 0 , 1.74]
+The algorithm calcuted: D' = [ 0 , 0 , 0]
+
+
+The Base of the Triangular Pyramid of Shape 2 is :
+A = [ -4 , -4 , 0]
+B = [ 7.43 , -2.68 , 0]
+C = [ -3.24 , 3.81 , 0]
+The unknown Node has    D  = [ 0 , 0 , 8]
+The algorithm calcuted: D' = [ 0 , 0 , 0]
+
+
+The Base of the Triangular Pyramid of Shape 3 is :
+A = [ -3 , -3 , 0]
+B = [ 0 , 0 , 0]
+C = [ -3 , 3 , 0]
+The unknown Node has    D  = [ 0 , 0 , 5]
+The algorithm calcuted: D' = [ 0 , 0 , 0]
+
+
+The Base of the Triangular Pyramid of Shape 4 is :
+A = [ 10.97 , -14.04 , 0]
+B = [ 10 , 20 , 0]
+C = [ -20 , 10 , 0]
+The unknown Node has    D  = [ 0 , 0 , 30]
+The algorithm calcuted: D' = [ 0 , 0 , 0]
+
+
+The Base of the Triangular Pyramid of Shape 5 is :
+A = [ -100 , 80 , 0]
+B = [ 40 , -80 , 0]
+C = [ 155.59 , 180.35 , 0]
+The unknown Node has    D  = [ 0 , 0 , 148.94]
+The algorithm calcuted: D' = [ 0 , 0 , 0]
+
+
+The Base of the Triangular Pyramid of Shape 6 is :
+A = [ 2.67 , 2.97 , 0]
+B = [ -2.82 , 1.08 , 0]
+C = [ 1.33 , -2.33 , 0]
+The unknown Node has    D  = [ 0 , 0 , 1]
+The algorithm calcuted: D' = [ 0 , 0 , 0]
+
+
+The Base of the Triangular Pyramid of Shape 7 is :
+A = [ 2.67 , 2.97 , 0]
+B = [ -2.82 , 1.08 , 0]
+C = [ 1.33 , -2.33 , 0]
+The unknown Node has    D  = [ 0 , 0 , 4]
+The algorithm calcuted: D' = [ 0 , 0 , 0]
+
+
+The Base of the Triangular Pyramid of Shape 8 is :
+A = [ -3 , -2 , 0]
+B = [ -3 , 3 , 0]
+C = [ -1 , 2 , 0]
+The unknown Node has    D  = [ 0 , 0 , 4]
+The algorithm calcuted: D' = [ 0 , 0 , 0]
+
+

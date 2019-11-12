@@ -1,0 +1,41 @@
+#!/bin/bash
+DIR=$(pwd)			
+
+unameOut="$(uname -s)"
+case "${unameOut}" in
+    Linux*)     machine=Linux;;
+    Darwin*)    machine=Mac;;
+    CYGWIN*)    machine=Cygwin;;
+    MINGW*)     machine=MinGw;;
+    *)          machine="UNKNOWN:${unameOut}"
+esac
+echo ${machine}
+
+if [ ${machine} == "Linux" ]
+then
+	echo "Running programs in Linux Enviroment"
+	if [ "$1" == "clean" ] 
+	then
+		echo "Clean up.."
+		rm -rfv Node_Localization/build/*
+	else
+		if [ "$1" != "" ]
+		then
+			echo "Ignoring extra arguments.."
+		fi
+		echo "Running project.."
+		echo "CMake Building for Object_Example.."
+		cd Node_Localization
+		mkdir build
+		cd build
+		cmake ..
+		echo "CMake Build done"
+		echo "Build project..."
+		make
+		echo "Build done..."
+		echo "-Running Object Example..."
+		echo "------------------------ Node_Localization ------------------------"
+		./Node_Localization;
+		echo "----------------------------------------------------------------" 
+	fi
+fi

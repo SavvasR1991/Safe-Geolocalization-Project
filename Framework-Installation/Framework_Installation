@@ -1,0 +1,394 @@
+#!/bin/bash
+
+##############################################################################
+#Author : Savvas Rostantis                                                   #
+#Version: 1.0                                                                #
+#Name   : trustvisor_run                                                     #
+#Title  : BashScript executable to install uberxmhf for linux                #
+#Tested : Ubuntu 16.04 with TPM v2.                                          #
+##############################################################################
+
+###############################################################################################################################################################
+#uberXMHF                                                                                                                                                     #
+#The uber eXtensible Micro-Hypervisor Framework (uberXMHF) is a compositionally verifiable, extensible, micro-hypervisor framework for commodity platforms    #
+#advocating the design and development of a new class of security-oriented micro-hypervisor based applications (“uberapps”).                                  #
+###############################################################################################################################################################
+
+###############################################################################################################################################################
+#--------------------------------------------------------------------------UBERXMHF---------------------------------------------------------------------------#
+###############################################################################################################################################################
+
+
+
+export LOG_PATH=$HOME/uberxmhf/Logs/
+export REPORT_PATH=$HOME/uberxmhf/Installation_Report/
+{
+	TOTAL_TIME=$(date +%s.%N)
+	echo "|-----------########################################################### UBERXMHF HYPERVISOR  ############################################################-----------|"
+	echo " "
+	cd    
+	if [ ! -d " ${HOME%%/uberxmhf}" ]; then
+		echo "....Removing uberxmhf folder from HOME ....... "
+		sudo rm -rf uberxmhf
+	fi
+
+	while true; do
+	    read -p "Do you wish to Install trustvisor?" yn
+	    case $yn in
+		[Yy]* ) break;;
+		[Nn]* ) exit;;
+		* ) echo "Please answer yes or no.";;
+	    esac
+	done
+	echo "------------------->Software update--------------------< "
+	echo " "
+	echo "........ Remove jtts "
+	yes Y | sudo apt-get --purge remove jtss           #Remove jtss for later installation
+	echo " "
+	echo "........Remove lists/locks "
+	sudo rm /var/lib/apt/lists/lock            #Clear locks
+	echo " "
+	echo "........Remove archives/locks "
+	sudo rm /var/cache/apt/archives/lock       #Clear cashe   
+	echo " "         
+	echo "........Remove dpkg/locks"                                                                    
+	sudo rm /var/lib/dpkg/lock                 #Clear dpkg
+	echo " "
+	echo "........autoremove"
+	yes Y | sudo apt autoremove 
+	echo " "
+	echo "........install -f"
+	sudo apt-get install -f                    #Resolve depentences
+	echo " "
+	echo "........update"
+	sudo apt-get update                        #Update system
+	echo " "
+	echo "........upgrade"
+	sudo apt-get upgrade
+	echo " "
+	read -p "Press any key to continue...."
+
+	echo "---------------------------------------------------- Clone Uberxmhf --------------------------------------------------"
+	cd
+        echo $PWD
+	UBERXMHF_TIME=$(date +%s.%N)
+	echo "Downloading...uberxmhf from https://github.com/hypcode/uberxmhf.git!Continue?" yn
+	uberxmhf_downloading_time=$(date +%s.%N)
+	git clone https://github.com/hypcode/uberxmhf.git                                        #Download uberxmhf from github
+	uberxmhf_downloading_time=$(echo "$(date +%s.%N) - $uberxmhf_downloading_time" | bc)	
+	echo " "	                                                                                                                  #Install tools for uberxmhf
+	echo "------------------------------------------------- Tools installation -------------------------------------------------"
+	echo " "
+	uberxmhf_tool_downloading_time=$(date +%s.%N)
+	echo "---------------------------------------> Install aptitude <---------------------------------------"
+	yes Y | sudo apt-get install aptitude                                                                                          #Install aptitude
+	echo " "
+	echo "------------------------------------------> Install git <-----------------------------------------"
+	yes Y | sudo apt-get install git                                                                                          #Install aptitude
+	echo " "
+	echo "---------------------------------------> Install pbuilder <---------------------------------------"
+	yes Y | sudo apt-get install pbuilder                                                                                          #Install pbuilder
+	echo " "
+	echo "---------------------------------------> Install texinfo  <---------------------------------------"
+	yes Y | sudo apt-get install texinfo                                                                                           #Install texinfo
+	echo " "
+	echo "--------------------------------------->    Install ruby  <---------------------------------------"
+	yes Y | sudo apt-get install ruby                                                                                              #Install ruby
+	echo " "
+	echo "---------------------------------------> Install build-essential <--------------------------------"
+	yes Y | sudo apt-get install build-essential                                                                                   #Install build-essential
+	echo " "
+	echo "---------------------------------------> Install autoconf <---------------------------------------"
+	yes Y | sudo apt-get install autoconf                                                                                          #Install autoconf
+	echo " "
+	echo "---------------------------------------> Install libtool <----------------------------------------"
+	yes Y | sudo apt-get install libtool     
+	echo " "                                                                                      #Install libtool
+	echo "---------------------------------------> Install cbmc <-------------------------------------------"
+	yes Y | sudo apt-get install cbmc                                                                                              #Install cbmc
+	echo "---------------------------------------> Install gcc-multilib <-----------------------------------"
+	yes Y | sudo aptitude install gcc-multilib                                                                                     #Install gcc-multilib
+	echo " "
+	uberxmhf_tool_downloading_time=$(echo "$(date +%s.%N) - $uberxmhf_tool_downloading_time" | bc)
+	echo "---------------------------------------------- Tools installation ends -----------------------------------------------"
+                                                                                                                         #create configuration files 
+	read -p "Press any key to continue...."	
+	uberxmhf_install_time=$(date +%s.%N)
+	cd uberxmhf/
+	echo $PWD
+	mkdir Logs
+	mkdir Installation_Report
+	mkdir TrustVisor_Packages	
+	cd xmhf/
+	echo $PWD
+	echo " "
+	echo " "
+	echo "------------------------------------------------------ Clean Up ------------------------------------------------------"
+	make clean                                                                                                                     #Clean up workspace if nesessary
+	echo " "
+	echo " "
+	echo "---------------------------------------------------- Autogeneration --------------------------------------------------"
+	./autogen.sh                                                                                                                   #Create configure executable file 
+	echo "Done...configure file is created "
+	echo " "
+	echo " "
+	echo "---------------------------------------------- Configuration Trustvisor ----------------------------------------------"
+	./configure --with-approot=hypapps/trustvisor 
+	echo " "
+	echo " "                                                                                                                        #Install Trustvisor
+	echo "------------------------------------------------- Install Trustvisor -------------------------------------------------"
+echo $PWD
+	cd xmhf/src/xmhf-core/xmhf-runtime/xmhf-baseplatform/arch/x86                                                                   #Initialize variables in the file below to avoid runtime errors.
+	echo $PWD	
+	sed -i 's/u32 vendor_dword1, vendor_dword2, vendor_dword3;/u32 vendor_dword1=0, vendor_dword2=0, vendor_dword3=0;/g' bplt-x86.c
+	cd    
+	echo $PWD                                                                                                                          #Go to home directory
+	cd uberxmhf/xmhf                                                                                                                #Go to uberxmhf/xmhf  
+	echo $PWD	
+	make 2>&1 | tee ${LOG_PATH%%/}/TrustVisor_Make_Log.txt 
+	sudo make install 2>&1 | tee ${LOG_PATH%%/}/TrustVisor_Install_Log.txt                                                                                                               #Install
+	sudo make install-dev 2>&1 | tee ${LOG_PATH%%/}/TrustVisor_Install_Dev_Log.txt 
+
+	./configure --with-approot=hypapps/trustvisor --prefix=$(SYSROOT)/usr                                                          #Configure trustvisor
+	sudo make install-dev 2>&1 | tee  ${LOG_PATH%%/}/TrustVisor_Conf_Log.txt                                                                                            #Install
+	echo "---------------------------------------------- Install Trustvisor ends -----------------------------------------------"
+	echo " "
+	echo " "
+	cd                                                                                                                             #Go to home directory   
+        echo $PWD                                                                                                                   #Verify if files hypervisor-x86.bin.gz and init-x86.bin are in /boot
+	cd /boot
+	echo $PWD
+	echo "Verify if created files exists in /boot"
+	if [ -d "hypervisor-x86.bin.gz" ]&& [ -d "init-x86.bin" ]
+	then
+		echo "INSTALLATION FAILED!!!!"
+		echo "Files [hypervisor-x86.bin.gz,init-x86.bin] don't exists in /boot"
+	else	
+		echo "-------------------------- INSTALLATION SUCCESFULL!!!! --------------------------"									# Installation is succesfull only if hypervisor-x86.bin.gz and init-x86.bin files
+		sudo chmod 777 hypervisor-x86.bin.gz                                                                                        # are in /boot folder
+		sudo chmod 777 init-x86.bin
+		echo " "
+		echo "-> /boot :"
+		ls -al
+	fi
+	uberxmhf_install_time=$(echo "$(date +%s.%N) - $uberxmhf_install_time" | bc)                                                                                                                                                 
+	read -p "Press any key to continue...."	
+	cd
+	echo $PWD
+	echo "---------------------------------------------- GRUB settings for uberxmhf  --------------------------------------"        #Settings for grub 
+
+	#sudo apt-get purge grub* os-prober
+	#sudo apt-get purge grub-gfxpayload-lists
+	#sudo apt-get install grub
+	#sudo update-grub
+	#grub-install /dev/sda2             
+		                                                                                                                      #Configurations for Trustvisor
+	echo "---------------------------------------------- Configuration for Trustvisor  -------------------------------------"
+	trustvisor_conf_time=$(date +%s.%N)
+	echo " "
+	echo "---------------------------------------> Blacklist tpm_infineon <---------------------------------------."
+	echo " Set tpm_infineon to blacklist for trustvisor."
+	cd /etc/modprobe.d                                                                                                             #Go to /etc/modprobe.d for the blacklist
+	echo $PWD	                                                                                                                       #Set tpm_infineon to blacklist for trustvisor
+	if grep -Fxq "blacklist tpm_infineon" blacklist.conf                                                                           #Check if tpm_infineon is in blacklist for trustvisor
+	then
+	    echo "NOTE: tpm_infineon is in blacklist"
+	else
+	    sudo chmod 777 blacklist.conf                                                                                              #Modify blacklist .Set tpm_infineon in blacklist 
+	    echo "--> Blacklisting tpm_infineon"
+	    sudo echo " " >> blacklist.conf
+	    sudo echo "#Modern Ubuntu has a tendency to load the Infineon-specific v1.1b TPM driver, when it should be using tpm_tis." >> blacklist.conf
+	    sudo echo "blacklist tpm_infineon" >> blacklist.conf
+	fi
+	cd
+        echo $PWD
+        echo $PWD
+	echo " "
+	echo "---------------------------------------> Disable Trousers <---------------------------------------."                      #Disable trousers for jtss control of TPM
+	dpkg -s "trousers" &> /dev/null
+
+	if [ $? -eq 0 ]; then
+	    echo "trousers Package  is installed!"
+	    echo "trousers Package  is Disabled!"
+	    /etc/init.d/trousers status
+	    /etc/init.d/trousers stop
+	else
+	    echo "trousers Package  is NOT installed!"
+	fi
+	echo " "
+	echo "---------------------------------------> Downloading jtss v.0.7 <---------------------------------------."            #Download jtss and install 
+	cd uberxmhf/
+        echo $PWD
+	cd TrustVisor_Packages/
+	echo $PWD
+	wget https://sourceforge.net/projects/trustedjava/files/jTSS%20%28Full%20Java%20%28tm%29%20TSS%29/jTSS%200.7.1a/jTSS_0.7.1a.zip
+	unzip jTSS_0.7.1a.zip
+	rm jTSS_0.7.1a.zip
+	cd jTSS_0.7.1a/lib/ini
+	echo $PWD
+	sed -i 's/#     type=iaik.tc.tss.impl.java.tsp.TcTssLocalCallFactory/type=iaik.tc.tss.impl.java.tsp.TcTssLocalCallFactory/g' jtss_tsp.ini
+	cd ../../
+	echo $PWD
+	cd deb/
+	echo $PWD
+	sudo dpkg -i jtss_0.7.1a_all.deb 2>&1 | tee ${LOG_PATH%%/}/jtss_Install_Log.txt 
+	yes Y | sudo apt-get -f install
+	cd
+	echo $PWD
+	cd uberxmhf/TrustVisor_Packages/jTSS_0.7.1a/tests
+	echo $PWD
+	sudo bash run_tests.sh  2>&1 | tee ${LOG_PATH%%/}/jtss_Test_Results_Log.txt 
+	cd
+	echo $PWD
+	echo " "
+	echo "---------------------------------------> Downloading jtpmtools v.0.6 <---------------------------------------." #Download jtpmtools and install 
+	cd uberxmhf/TrustVisor_Packages
+	echo $PWD
+	wget https://sourceforge.net/projects/trustedjava/files/jTPM%20Tools/jTPM%20Tools%20v0.6/jtpmtools_0.6.deb
+	sudo dpkg -i jtpmtools_0.6.deb 2>&1 | tee ${LOG_PATH%%/}/jtpmtools_Install_Log.txt 
+	echo " "
+	echo "-------------------------------> Set the tpm device to be accessible by jtss <--------------------------------."  #Set control of TPM to jtss 
+	sudo chown jtss:tss /dev/tpm0
+	/etc/init.d/jtss start
+	/etc/init.d/jtss status
+	cd
+	echo $PWD
+
+	jtt take_owner -e ASCII -o '456852'                      #jtts take control of TPM
+
+	jtt nv_definespace \                                             #jtss define nv spaces
+	    --index 0x456852 \
+	    --size 20 \
+	    -o '456852' \
+	    -e ASCII \
+	    -p 11,12 \
+	    -w \
+	    --permission 0x00000000 \
+	    --writelocality 2 \
+	    --readlocality 2
+
+	jtt nv_definespace \
+	    --index 0x00014e56 \
+	    --size 32 \
+	    -o '456852' \
+	    -e ASCII \
+	    -p 11,12 \
+	    -w \
+	    --permission 0x00000000 \
+	    --writelocality 2 \
+	    --readlocality 2
+
+	/etc/init.d/jtss stop
+	modprobe -r tpm_tis
+	echo " "
+
+	read -p "Press any key to continue...."
+	echo "-------------------------------> Download and install packages  newlib-1.19.0.tar.gz and openssl-1.0.0d.tar.gz <--------------------------------."
+	cd uberxmhf/xmhf/hypapps/trustvisor/tee-sdk/ports/newlib                                                      #Download and install newlib-1.19.0.tar.gz
+	echo $PWD	
+	wget ftp://sourceware.org/pub/newlib/newlib-1.19.0.tar.gz
+	tar -xzvf newlib-1.19.0.tar.gz
+	cd newlib-1.19.0
+	echo $PWD
+	patch -p1 < ../newlib-tee-sdk-131021.patch
+
+	cd ../../
+	echo $PWD
+	cd openssl/
+	echo $PWD
+	wget https://www.openssl.org/source/old/1.0.0/openssl-1.0.0d.tar.gz                                            #Download and install openssl-1.0.0d.tar.gz
+	tar -xzvf openssl-1.0.0d.tar.gz
+	cd openssl-1.0.0d/
+	echo $PWD
+	patch -p1 < ../openssl-tee-sdk-131021.patch
+
+	cd
+	echo $PWD
+	cd uberxmhf/xmhf/hypapps/trustvisor/tee-sdk/
+	echo $PWD
+	cd
+	sudo make 2>&1 | tee ${LOG_PATH%%/}/newlib_openssl_Install_Log.txt
+
+
+
+	trustvisor_conf_time=$(echo "$(date +%s.%N) - $trustvisor_conf_time" | bc)  
+	UBERXMHF_TIME=$(echo "$(date +%s.%N) - $UBERXMHF_TIME" | bc)
+	TOTAL_TIME=$(echo "$(date +%s.%N) - $TOTAL_TIME" | bc)
+	echo " "                                                                                                    #Print statistics 
+
+	echo "##################################################################"
+	echo "######################### STATISTICS #############################"
+	echo "##################################################################"
+	echo "# "
+	echo "# -> uberxhmf Donwload time                  :$uberxmhf_downloading_time" 
+	echo "# -> uberxhmf Install tool time              :$uberxmhf_tool_downloading_time"
+	echo "# -> uberxhmf trustvisor Install time        :$uberxmhf_install_time"
+	echo "# -> uberxmhf trustvisor configuration time  :$trustvisor_conf_time"
+	echo "# -> uberxmhf Total time                     :$UBERXMHF_TIME"
+	echo "# "
+	echo "# -> Total program time                      :$TOTAL_TIME"
+	echo "# "
+	echo "##################################################################"
+	echo " "
+} 2>&1 | tee ${LOG_PATH%%/}/Program_Log.txt
+
+{
+	echo "---------------------------------------------------- Verification --------------------------------------------------" 
+	declare -a StringArray=("aptitude" "pbuilder" "texinfo" "ruby" "build-essential" "autoconf" "libtool" "cbmc" "gcc-multilib" "jtss" "jtpmtools")
+	i=$((1))
+	echo " "
+	echo "------------------- TOOLS VERIFICATION -----------------"
+
+	for val in ${StringArray[@]}; do
+		dpkg -s $val &> /dev/null
+		if [ $? -eq 0 ]; then
+		    echo "$i.$val  is installed! OK "
+		else
+		    echo "$i.$val  is NOT installed! ERROR"
+		fi
+		i=$((i+1))
+	done
+	echo " "
+	echo "---------------- TRUSTVISOR FILES IN BOOT --------------"
+	cd
+	cd /boot
+
+	if [ -d "hypervisor-x86.bin.gz" ]&& [ -d "init-x86.bin" ]
+	then
+		echo "$i.Files [hypervisor-x86.bin.gz,init-x86.bin] don't exists in /boot ERROR"
+	else	
+		echo "$i.Files [hypervisor-x86.bin.gz,init-x86.bin] exists in boot! OK"		
+	fi
+	i=$((i+1))
+	echo " "
+	echo "---------------- TRUSTVISOR CONFIGURATION --------------"
+	cd
+	cd /etc/modprobe.d 
+	if grep -Fxq "blacklist tpm_infineon" blacklist.conf            
+	then
+	    echo "$i.tpm_infineon is in blacklist OK"
+	else
+	    echo "$i.tpm_infineon not is in blacklist ERROR"
+	fi
+	i=$((i+1))
+
+	cd
+	cd uberxmhf/xmhf/hypapps/trustvisor/tee-sdk/ports/newlib
+	if [ ! -d "install" ]&& [ -d "build" ]
+	then
+		echo "$i.Files [newlib] don't installed properly in ERROR"
+	else	
+		echo "$i.Files [newlib] installed! OK"		
+	fi
+	i=$((i+1))
+
+	cd
+	cd uberxmhf/xmhf/hypapps/trustvisor/tee-sdk/ports/openssl
+	if [ ! -d "install" ]&& [ -d "build" ]
+	then
+		echo "$i.Files [openssl] don't installed properly ERROR"
+	else	
+		echo "$i.Files [openssl] installed! OK"		
+	fi
+} 2>&1 | tee ${REPORT_PATH%%/}/Installation_Report.txt
+#----------------------------------------------------------------------------------END-----------------------------------------------------------------------------------#
