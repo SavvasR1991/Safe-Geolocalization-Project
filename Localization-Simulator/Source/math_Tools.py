@@ -4,23 +4,11 @@ import numpy as np
 
 class mathTools():
     def printProgressBar (iteration, total, prefix = '', suffix = '', decimals = 1, length = 100, fill = '█', printEnd = "\r"):
-        """
-        Call in a loop to create terminal progress bar
-        @params:
-            iteration   - Required  : current iteration (Int)
-            total       - Required  : total iterations (Int)
-            prefix      - Optional  : prefix string (Str)
-            suffix      - Optional  : suffix string (Str)
-            decimals    - Optional  : positive number of decimals in percent complete (Int)
-            length      - Optional  : character length of bar (Int)
-            fill        - Optional  : bar fill character (Str)
-            printEnd    - Optional  : end character (e.g. "\r", "\r\n") (Str)
-        """
+    
         percent = ("{0:." + str(decimals) + "f}").format(100 * (iteration / float(total)))
         filledLength = int(length * iteration // total)
         bar = fill * filledLength + '-' * (length - filledLength)
         print('\r%s |%s| %s%% %s' % (prefix, bar, percent, suffix), end = printEnd)
-        # Print New Line on Complete
         if iteration == total: 
             print()
 
@@ -29,9 +17,20 @@ class mathTools():
         
     def nodeDistancesCalculationDiff(p1,p2,E):
         return abs(math.sqrt((p2[0] - E[0]) ** 2 + (p2[1] - E[1]) ** 2 + (p2[2] - E[2])**2) - math.sqrt((p1[0] - E[0]) ** 2 + (p1[1] - E[1]) ** 2 + (p1[2] - E[2])**2))
-    
-    def multilaterationCalculator(nodes,r1,r2,r3):
-        P1 = np.array(nodes[0]); P2 = np.array(nodes[1]); P3 = np.array(nodes[2])
+        
+    def multilaterationCalculator(nodes,r,pickForCalc):
+        r1 = r[0]
+        r2 = r[1]
+        r3 = r[2]
+        r4 = r[3]
+        P1 = np.array(nodes["A"])
+        P2 = np.array(nodes["B"])
+        tempr3 = r3
+        if "Yes" in pickForCalc:        
+            P3 = np.array(nodes["D"])
+            r3 = r4
+        else:
+            P3 = np.array(nodes["C"])
         x1 = P1[0]; x2 = P2[0]; x3 = P3[0]
         y1 = P1[1]; y2 = P2[1]; y3 = P3[1]
         z1 = P1[2]; z2 = P2[2]; z3 = P3[2]
@@ -61,5 +60,16 @@ class mathTools():
         C = x1 * x1 + y1 * y1 + z1 * z1 - 2 * x1 * h - 2 * y1 * f + h * h + f * f - r1 * r1
         rootD = math.sqrt(B * B - 4 * A * C)
         z = (-B + rootD) / (2 * A); x = g * z + h; y = e * z + f
-        return [x,y,z]
+        
+        if "Yes" in pickForCalc:  
+            calcDist = mathTools.nodeDistancesCalculation([x,y,z],nodes["C"])
+            mirrorXYZ = [0,0,0]
+            if abs(calcDist - tempr3) > 0.00000000007: 
+                zz = (-B - rootD) / (2 * A)
+                x = g * (zz) + h; y = e * (zz) + f
+                return [x,y,zz]
+            else:
+                return [x,y,z]
+        else:
+            return [x,y,z]
   
