@@ -9,11 +9,11 @@ class bcolors:
     BOLD = '\033[1m'
     ENDC = '\033[0m'
 
-Packages = ["math","matplotlib","numpys","random","json","scipy","datetime","mpl_toolkits","urllib3"]
+Packages = ["math","matplotlib","numpy","random","json","scipy","datetime","mpl_toolkits","urllib3"]
 Files = ["Input/inputData.json","Source/algorithm_Localization.py","Source/data_Creator.py","Source/main.py","Source/math_Tools.py","Source/simulator.py","Source/start_simulation.py","Source/statistics_Collector.py"]
 
 check = True
-print(bcolors.OKBLUE +bcolors.BOLD + "Check installed packages and modules"+ bcolors.ENDC+ bcolors.ENDC)
+print("\n"+bcolors.OKBLUE +bcolors.BOLD + "Check installed packages and modules"+ bcolors.ENDC+ bcolors.ENDC)
 out = subprocess.Popen(['python3.7','--version'],stdout=subprocess.PIPE,stderr=subprocess.STDOUT)
 stdout,stderr = out.communicate()
 if "not" in str(stdout):
@@ -48,9 +48,9 @@ for files in Files:
         print(" "+bcolors.PASS + u'\u2714'+ bcolors.ENDC+" "+str(files))
 
 if check == True:
-    print("Start simulation")
+    print("\n"+bcolors.PASS +"Start simulation\n"+ bcolors.ENDC)
     os.system("cd Source && python3.7 start_simulation.py")
 else:
-    print("Please install required packages and modules")
+    print("\n"+bcolors.FAIL +"Please install required packages and modules"+ bcolors.ENDC)
       
 

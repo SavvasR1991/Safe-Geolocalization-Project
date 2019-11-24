@@ -36,6 +36,10 @@ with open(str(HOME)+'/Input/inputData.json') as json_file:
                         print("--->2. [x,y,z] are coordinates. Must be three numbers \n")
                         abort = "Skip"
                     else:
+                        if "D" in key:
+                            if int(values[2]) < 10 :
+                               print("--->2. Node D [z] axis must be greater than 10 \n")
+                               abort = "Skip"
                         arguments = arguments + str(values[0])+" "+str(values[1])+" "+str(values[2])+" "
             else:
                 print("Wrong input in /Input/inputData.json file for nodes")
@@ -45,14 +49,18 @@ with open(str(HOME)+'/Input/inputData.json') as json_file:
             if len(p["algorithms"]) == 1:
                 arguments = arguments +" --Tal "
                 for key,values in p["algorithms"][0].items():
-                    if key != "TDOA" and key != "TOA" and key != "RSSI":
-                        if values != "CHAN" and values != "Multilateration":
-                            print("3. Wrong input in /Input/inputData.json file for algorithms "+str(key))
-                            abort = "Skip"
+                    if (key != "TDOA" and key != "TOA" and key != "RSSI"):
+                        print("3. Wrong input in /Input/inputData.json file for algorithms "+str(key))
+                        abort = "Skip"
                     else:
                         arguments = arguments + str(key)+" "
                         for val in values:
-                            arguments = arguments +str(val)+" "
+                            if (val != "CHAN" and val != "Multilateration" and val != "FourNodes"):
+                                print("3. Wrong input in /Input/inputData.json file for algorithms "+str(val))
+                                abort = "Skip"
+                            else:
+                                arguments = arguments +str(val)+" "
+                    
             else:
                 print("Wrong input in /Input/inputData.json file for algorithms")
                 print("--->Algorithms structure is wrong... \n")

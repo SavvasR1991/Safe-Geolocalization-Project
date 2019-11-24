@@ -52,22 +52,27 @@ class Collector:
         path, dirs, files = next(os.walk(pathdir))
         meanX = {}
         varianceS = {}  
-        
+        Values = {}
         fileSummary = open(pathdir+"/SUMMARY/Info.txt", "w+")
         for d in dirs:
             if "Statistics" in str(d):
                 path2, dirs2, files2 = next(os.walk(pathdir+"/"+str(d)+"/Logs"))
-                Values = {}
                 for f in files2:
-                    inputVal = []
+                    if "Performance" in f and "Traces" not in f:
+                        Values.update({str(before(f,"_Performance")) : []})
+                break
+        for d in dirs:
+            if "Statistics" in str(d):
+                path2, dirs2, files2 = next(os.walk(pathdir+"/"+str(d)+"/Logs"))
+                for f in files2:
                     if "Performance" in f and "Traces" not in f:
                         fileP = open(pathdir+"/"+str(d)+"/Logs/"+f, "r")
                         for x in fileP:
                             if "TOA" in str(x) or "TDOA" in str(x) or "RSSI" in str(x):
                                 out = re.findall(r'\d+\.\d+|\d+',x) 
-                                inputVal.append([abs(float(out[0])-float(out[3])),abs(float(out[1])-float(out[4])),abs(float(out[2])-float(out[5]))])
-                        Values.update({str(before(f,"_Performance")) : inputVal})
-             
+
+                                Values[str(before(f,"_Performance"))].append([abs(float(out[0])-float(out[3])),abs(float(out[1])-float(out[4])),abs(float(out[2])-float(out[5]))])
+
         for keys,var in Values.items():  
             _x = 0;_x_ = 0
             _y = 0;_y_ = 0
@@ -83,7 +88,6 @@ class Collector:
                 _x_ = _x_ + (k[0] - _x)**2
                 _y_ = _y_ + (k[1] - _y)**2
                 _z_ = _z_ + (k[2] - _z)**2
-
             _x_ = _x_ /len(var)
             _y_ = _y_ /len(var)
             _z_ = _z_ /len(var)

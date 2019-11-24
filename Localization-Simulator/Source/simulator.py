@@ -197,25 +197,27 @@ class Simulation:
         color = 6;counter = 0;linewdth = 5
         for key,t in calculatedTraces.items():
             x, y, z = zip(*t)
-            ax.plot(x, y, z, "C"+str(color), label=str(key), linewidth=linewdth)
+            if "TDOA" in key:
+            
+                ax.plot(x, y, z, "C"+str(color), label=str(key), linewidth=linewdth)
+            else:
+                ax.plot(x, y, z, "C"+str(color), label=str(key), linewidth=linewdth)
             ax.scatter(x[0], y[0], z[0], "C"+str(color), label="Start " + str(key))
             color = color + 1
             ax.scatter(x[-1], y[-1], z[-1], "C"+str(color), label="End   " + str(key))
             color = color + 1;  counter = counter +1;  linewdth = linewdth - linewdth*0.40 
-        v_tmp = []
-        x_shape=[]
-        y_shape=[]
-        z_shape=[]
+
         for key,value in nodes.items():
             ax.text(value[0],value[1],value[2], str(key)) 
-            v_tmp.append(value)
-            x_shape.append(value[0])
-            y_shape.append(value[1])
-            z_shape.append(value[2])
-        v = np.array(v_tmp)
-        ax.scatter3D(v[:, 0], v[:, 1], v[:, 2])
-        #verts = [[v[0], v[1], v[4]], [v[0], v[3], v[4]], [v[2], v[1], v[4]], [v[2], v[3], v[4]], [v[0], v[1], v[2], v[3]]]
-        ax.add_collection3d(Poly3DCollection([v], facecolors='cyan', linewidths=1, edgecolors='r', alpha=.25))
+        if len(nodes) == 5:
+            v = np.array([nodes["A"], nodes["B"], nodes["C"], nodes["E"], nodes["D"]])	
+        elif len(nodes) == 4:
+            v = np.array([nodes["A"], nodes["B"], nodes["C"], nodes["C"], nodes["D"]])	
+        else:
+            exit(-1)
+        ax.scatter3D(v[:, 0], v[:, 1], v[:, 2])	
+        verts = [[v[0], v[1], v[4]], [v[0], v[3], v[4]], [v[2], v[1], v[4]], [v[2], v[3], v[4]], [v[0], v[1], v[2], v[3]]]
+        ax.add_collection3d(Poly3DCollection(verts, facecolors='cyan', linewidths=1, edgecolors='r', alpha=.25))
         ax.scatter(x[-1], y[-1], z[-1], c='b', marker='o')
         ax.legend()
         plt.savefig(pathfig+"/TraceLog.png")
