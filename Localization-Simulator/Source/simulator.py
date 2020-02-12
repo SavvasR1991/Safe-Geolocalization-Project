@@ -6,6 +6,8 @@ import numpy as np
 import matplotlib.dates as mdates
 import matplotlib.cbook as cbook
 import tkinter as tk
+import subprocess
+
 
 from math_Tools import *
 from data_Creator import *
@@ -22,7 +24,6 @@ from datetime import datetime
 pathlog = "";pathfig = "";pathdata = ""
 fields = 'A Coordinates', 'B Coordinates', 'C Coordinates', 'D Coordinates', 'E Start Point','Transmition Power','Noise Ratio','Steps','Show plots',"Num of Exp."
 numbering = 0
-
 HOME = os.path.abspath(os.path.join(os.path.dirname( __file__ ), '..', ''))
 
 #----------------------------------------------------- SIMULATION ------------------------------------------------------#
@@ -34,7 +35,7 @@ class Simulation:
         except OSError:
             if not os.path.isdir(str(HOME)+"/Statistics"):
                 print ("Creation of the directory failed Statistics. Exit...")
-                exit()
+                exit(-1)
         path, dirs, files = next(os.walk(str(HOME)+"/Statistics"))
         numbering = len(dirs)
         while os.path.isdir(str(HOME)+"/Statistics/Experiment_"+str(numbering+1)):
@@ -75,11 +76,9 @@ class Simulation:
             p = np.array(cur[:])
             xyz.append(cur[:])
 
-    def simulationDataCreation(nodes,transittionPower,noise,xyz,distances,calculatedValues,algorithms):
+    def simulationDataCreation(nodes,transittionPower,noise,xyz,distances,calculatedValues,algorithms,dirTotalTime):
         x, y, z = zip(*xyz)
-        RSSIValues =[]
-        TDOAValues =[]
-        TOAValues = []
+        RSSIValues =[]; TDOAValues =[]; TOAValues = []
         for i in range(0, len(x)):
             distances.append(Data.Distances_Data_Input(nodes,[x[i], y[i], z[i]]))
             if "RSSI" in algorithms:
@@ -96,18 +95,21 @@ class Simulation:
             calculatedValues.update({"TDOA": TDOAValues})
         if TOAValues:
             calculatedValues.update({"TOA": TOAValues})
+        rc = subprocess.call("./BS_Communication/run "+str(len(nodes)-1)+" "+str(len(xyz)),shell=True)
+        with open(os.getcwd()+"/BS_Communication/Total_Time.txt") as fp:
+            line = fp.readline()
+            dirTotalTime.update({"Communication_Time" : line})
             
-    def simulation(nodes,xyz,calculatedTraces,calculatedValues,transittionPower,noise,pickForCalc,algorithms):
-        Algorithms.Run_Selected_Algorithms(nodes,calculatedTraces, calculatedValues,xyz,transittionPower,noise,pickForCalc,algorithms)
+    def simulation(nodes,xyz,calculatedTraces,calculatedValues,transittionPower,noise,pickForCalc,algorithms,dirTotalTime):
+        Algorithms.Run_Selected_Algorithms(nodes,calculatedTraces, calculatedValues,xyz,transittionPower,noise,pickForCalc,algorithms,dirTotalTime)
 
-    def storeDataFiles(nodes,transittionPower,noise,distances,Values,traces,calculatedTraces,metric_SI):
+    def storeDataFiles(nodes,transittionPower,noise,distances,Values,traces,calculatedTraces,metric_SI,dirTotalTime):
         x, y, z = zip(*traces)
         dist = Data.tetrahedronContour(nodes)
         header = ""; headerRssi=""; txt = "-----------"; txt2 = "";metricSI ="";fileRaw=[]
         for tmp in range(0,len(nodes)):
             txt = txt + "----------" 
         txt = txt + "\n          |"
-        
         for keys,values in nodes.items():
             header  = header + " " + str(keys)+ " = " + str(values)+ "\n"
             txt = txt + "    "+str(keys)+"    |"
@@ -126,7 +128,6 @@ class Simulation:
         headerRssi = header+ "\n\n"+\
                  "Transmition Power of nodes         :" + str(transittionPower) + " dBm\n"+"White Noise coefficient            :" + str(noise) + "\n"+\
                  "Equation for calculation           : Received signal strength A − 10 · n · log10 d\n\n"
-
         for keys, values in calculatedTraces.items():
             if keys in "Traces":
                 inputFileRaw = 0
@@ -140,7 +141,6 @@ class Simulation:
                 final_header = header
             filePerf.write(final_header)
             for i in range(0, len(x)): 
-
                 inputFile = ""
                 if "RSSI" in keys:
                     metricSI= metric_SI["RSSI"]
@@ -157,7 +157,6 @@ class Simulation:
                 filePerf.write(inputFile)
                 if keys in "Traces":
                     fileRaw.write(inputFileRaw)
-
         for keys2,values2 in Values.items():
             fileRaw = open(pathdata+"/"+str(keys2)+"_Raw_Data.txt", "w")
             file = open(pathlog+"/"+str(keys2) +"_Output.txt", "w")    
@@ -185,8 +184,20 @@ class Simulation:
                 i = i + 1
             fileRaw.write(inputFileRaw)
             file.write(inputFile)
-            
-                
+        file.close()
+        fileRaw.close()
+        filePerf.close()
+        
+
+        for keys2,values2 in dirTotalTime.items():
+            fileRawTime = open(pathdata+"/"+str(keys2)+"_Raw_Data_Time.txt", "w")
+            if "Communication" not in str(keys2):
+                for var in values2:
+                    fileRawTime.write(str(var)+"\n")
+            else:
+                fileRawTime.write(str(values2)+"\n")
+        fileRawTime.close()        
+        
     def plotGraphics(nodes,calculatedTraces,plot):
         global pathlog;
         if "No" in plot:
@@ -198,7 +209,6 @@ class Simulation:
         for key,t in calculatedTraces.items():
             x, y, z = zip(*t)
             if "TDOA" in key:
-            
                 ax.plot(x, y, z, "C"+str(color), label=str(key), linewidth=linewdth)
             else:
                 ax.plot(x, y, z, "C"+str(color), label=str(key), linewidth=linewdth)
@@ -206,7 +216,6 @@ class Simulation:
             color = color + 1
             ax.scatter(x[-1], y[-1], z[-1], "C"+str(color), label="End   " + str(key))
             color = color + 1;  counter = counter +1;  linewdth = linewdth - linewdth*0.40 
-
         for key,value in nodes.items():
             ax.text(value[0],value[1],value[2], str(key)) 
         if len(nodes) == 5:
@@ -221,10 +230,9 @@ class Simulation:
         ax.scatter(x[-1], y[-1], z[-1], c='b', marker='o')
         ax.legend()
         plt.savefig(pathfig+"/TraceLog.png")
-        plt.show()
-        plt.clf() 
+        plt.show(); plt.clf() 
 
-    def plotStatisticsGraphics(nodes,calculatedTraces,calculatedValues):
+    def plotStatisticsGraphics(nodes,calculatedTraces,calculatedValues,dirTotalTime):
         global pathfig;
         x, y, z = zip(*calculatedTraces["Traces"])
         for keys,values in calculatedTraces.items():
@@ -243,7 +251,6 @@ class Simulation:
                 plt.legend()
                 plt.savefig(pathfig+"/"+str(keys)+"_Performance.png")
                 plt.close()
-
         for keys,values in calculatedValues.items():
             tmp = [[] for i in range(len(values[0].keys()))]
             for vals in values:
@@ -259,6 +266,14 @@ class Simulation:
             plt.xlabel('Steps')
             plt.legend()
             plt.savefig(pathfig+"/"+str(keys)+"_Values.png")
+            plt.close()
+            
+        for keys,values in dirTotalTime.items():
+            plt.plot((values),label="Total time in secs")
+            plt.ylabel(str(keys)+' Execution Time')
+            plt.xlabel('Steps')
+            plt.legend()
+            plt.savefig(pathfig+"/"+str(keys)+"_TotalTime.png")
             plt.close()
 
     def cleanup(xyz,xyzTDOA,xyzRSSI,xyzTOA,RSSIValues,TDOAValues,TOAValues,distances):   

@@ -1,0 +1,44 @@
+#!/bin/bash
+DIR=$(pwd)			
+
+unameOut="$(uname -s)"
+case "${unameOut}" in
+    Linux*)     machine=Linux;;
+    Darwin*)    machine=Mac;;
+    CYGWIN*)    machine=Cygwin;;
+    MINGW*)     machine=MinGw;;
+    *)          machine="UNKNOWN:${unameOut}"
+esac
+echo ${machine}
+
+if [ ${machine} == "Linux" ]
+then
+	echo "Running programs in Linux Enviroment"
+	if [ "$1" == "clean" ] 
+	then
+		echo "Clean up.."
+		rm -rfv build/*
+	else
+	    if [ "$#" != "2" ]; 
+	    then
+            echo "Your command line contains no proper arguments"
+            exit
+        fi
+        cd BS_Communication
+		echo "Running project.."
+		echo "CMake Building for Localization simulator.."
+		mkdir build
+		cd build
+		cmake ..
+		echo "CMake Build done"
+		echo "Build project..."
+		make
+		echo "Build done..."
+		echo "--------- Localization_Algorithms Simulator ---------"
+		./Localization_Algorithms $1 $2
+        cd ../		
+        rm -rf build
+        cd ../
+		echo "-----------------------------------------------------" 
+	fi
+fi

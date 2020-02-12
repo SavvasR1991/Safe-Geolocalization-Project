@@ -1,20 +1,26 @@
 import numpy as np
 import json
 import os
-
 from main import *
 
 HOME = os.path.abspath(os.path.join(os.path.dirname( __file__ ), '..', ''))
-
+class bcolors:
+    PASS = '\033[92m'
+    FAIL = '\033[91m'
+    WARNING = '\033[93m'
+    OKBLUE = '\033[94m'
+    BOLD = '\033[1m'
+    ENDC = '\033[0m'
+    
 with open(str(HOME)+'/Input/inputData.json') as json_file:
     data = json.load(json_file)
     expCount = 1
     arguments = ""
     for p in data:
         if expCount == 1:
-            print("-------------------------- Executing "+str(expCount)+"st Experiment ---------------------------------------")
+            print(bcolors.BOLD +"-------------------------- Executing "+str(expCount)+"st Experiment ---------------------------------------"+ bcolors.ENDC)
         else:        
-            print("-------------------------- Executing "+str(expCount)+"nd Experiment ---------------------------------------")
+            print(bcolors.BOLD +"-------------------------- Executing "+str(expCount)+"nd Experiment ---------------------------------------"+ bcolors.ENDC)
         abort = "No"
         if len(p) != 12:
             print("Wrong input format in /Input/inputData.json file... Abort..")
@@ -27,7 +33,6 @@ with open(str(HOME)+'/Input/inputData.json') as json_file:
                 abort = "Skip"
             else:
                 arguments = arguments + " --X " + str(E[0])+" "+str(E[1])+" "+str(E[2])+" " 
-
             if len(p["nodes"]) == 1:
                 arguments = arguments + " --nd " + str(len(p["nodes"][0])) + " "
                 for key,values in p["nodes"][0].items():
@@ -45,7 +50,6 @@ with open(str(HOME)+'/Input/inputData.json') as json_file:
                 print("Wrong input in /Input/inputData.json file for nodes")
                 print("--->Node structure is wrong... \n")
                 abort = "Yes"
-            
             if len(p["algorithms"]) == 1:
                 arguments = arguments +" --Tal "
                 for key,values in p["algorithms"][0].items():
@@ -55,7 +59,7 @@ with open(str(HOME)+'/Input/inputData.json') as json_file:
                     else:
                         arguments = arguments + str(key)+" "
                         for val in values:
-                            if (val != "CHAN" and val != "Multilateration" and val != "FourNodes"):
+                            if (val != "CHAN" and val != "Multilateration" and val != "FourNodes" and val != "Direct_Location_Method"):
                                 print("3. Wrong input in /Input/inputData.json file for algorithms "+str(val))
                                 abort = "Skip"
                             else:
@@ -65,7 +69,7 @@ with open(str(HOME)+'/Input/inputData.json') as json_file:
                 print("Wrong input in /Input/inputData.json file for algorithms")
                 print("--->Algorithms structure is wrong... \n")
                 abort = "Yes"
-  
+
             transittionPower = p["transittionPower_dBm"]
             if type(transittionPower) != int and type(transittionPower) != float:
                 print("Wrong input in /Input/inputData.json file for Transmition Power")
@@ -139,14 +143,14 @@ with open(str(HOME)+'/Input/inputData.json') as json_file:
                 arguments = arguments + " --top "+ str(pickForCalc)+" "
             expCount = expCount +1
         if abort in "Yes":
-            print("Aborting...\n----------------------------------- ABORTING -----------------------------------------------\n\n")
+            print(bcolors.FAIL +"Aborting...\n----------------------------------- ABORTING -----------------------------------------------\n\n"+ bcolors.ENDC)
             exit(-1)
         elif abort in "No":
             re = os.system("python3.7 main.py " + arguments)
+            arguments = ""
             if re != 0:
-                print("------------------------------------- FAILS ------------------------------------------------\n\n")  
+                print(bcolors.FAIL +"------------------------------------- FAILS ------------------------------------------------\n\n"+ bcolors.ENDC)  
             else:                     
-                print("------------------------------------ SUCCESS -----------------------------------------------\n\n")        
+                print(bcolors.PASS +"------------------------------------ SUCCESS -----------------------------------------------\n\n"+ bcolors.ENDC)        
         else:
-            print("Skip this experiment...\n------------------------------------ SKIPPING ----------------------------------------------\n\n")
-
+            print(bcolors.WARNING +"Skip this experiment...\n------------------------------------ SKIPPING ----------------------------------------------\n\n")

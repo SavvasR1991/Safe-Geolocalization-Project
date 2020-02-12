@@ -1,7 +1,6 @@
 import os
 import subprocess
 
-
 class bcolors:
     PASS = '\033[92m'
     FAIL = '\033[91m'
@@ -9,7 +8,7 @@ class bcolors:
     BOLD = '\033[1m'
     ENDC = '\033[0m'
 
-Packages = ["math","matplotlib","numpy","random","json","scipy","datetime","mpl_toolkits","urllib3"]
+Packages = ["math","matplotlib","numpy","random","json","scipy","datetime","urllib3"]
 Files = ["Input/inputData.json","Source/algorithm_Localization.py","Source/data_Creator.py","Source/main.py","Source/math_Tools.py","Source/simulator.py","Source/start_simulation.py","Source/statistics_Collector.py"]
 
 check = True
@@ -21,14 +20,6 @@ if "not" in str(stdout):
     check = False
 else:
     print(" "+bcolors.PASS + u'\u2714'+ bcolors.ENDC+" Python 3 ")
-
-out = subprocess.Popen(['pip3','-V'],stdout=subprocess.PIPE,stderr=subprocess.STDOUT)
-stdout,stderr = out.communicate()
-if "not" in str(stdout):
-    print(" "+bcolors.FAIL + u'\u2718'+ bcolors.ENDC+" Pip 3 ")
-    check = False
-else:
-    print(" "+bcolors.PASS + u'\u2714'+ bcolors.ENDC+" Pip 3 ")
 
 out = subprocess.Popen(['pydoc','modules'],stdout=subprocess.PIPE,stderr=subprocess.STDOUT)
 installedPackages,stderr = out.communicate()

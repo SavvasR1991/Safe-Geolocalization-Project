@@ -7,9 +7,9 @@ class Data:
         distancesTetrahedron = {}
         temp = baseNodes.copy()
         for keys,values in baseNodes.items():
-            del temp[keys]
             for key2,values2 in temp.items():
-                distancesTetrahedron.update( {str(keys)+str(key2) : mathTools.nodeDistancesCalculation(values,values2)} )
+                if keys != key2:
+                    distancesTetrahedron.update( {str(keys)+str(key2) : mathTools.nodeDistancesCalculation(values,values2)} )
         return distancesTetrahedron
 
     def Distances_Data_Input(baseNodes,X):
@@ -24,7 +24,6 @@ class Data:
         for keys,values in baseNodes.items():
             distance = mathTools.nodeDistancesCalculation(values,X)
             RSSIdbm.update({str(keys) : - (10 * noise * math.log(distance, 10) - transittionPower)})
-
         return RSSIdbm
 
     def TODA_Data_Input(baseNodes,X):
