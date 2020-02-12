@@ -1,0 +1,10 @@
+TDOA_FourNodes Performance:
+    Average Error :
+      E[X] = 24.59422161167775, E[Y] = 21.303657934498766, E[Z] = 35.84350298857858
+
+TDOA_FourNodes Performance:
+    Variance Error:
+      V[X] = 2524.3149058051786, V[Y] = 1360.0120464427605, V[Z] = 6127.354842453331
+
+TDOA_FourNodes_Raw_Data Total Execution Time:
+0.35819258905590906

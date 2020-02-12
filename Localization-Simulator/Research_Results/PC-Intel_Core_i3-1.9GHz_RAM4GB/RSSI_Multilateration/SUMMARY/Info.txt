@@ -1,0 +1,10 @@
+RSSI_Multilateration Performance:
+    Average Error :
+      E[X] = 0.0002100757277334623, E[Y] = 0.00038783211783194733, E[Z] = 0.017694839799698166
+
+RSSI_Multilateration Performance:
+    Variance Error:
+      V[X] = 9.545607772012884e-06, V[Y] = 3.2534142430679945e-05, V[Z] = 0.0677243926584332
+
+RSSI_Multilateration_Raw_Data Total Execution Time:
+0.0001217767284087155

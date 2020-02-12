@@ -1,0 +1,10 @@
+TDOA_CHAN Performance:
+    Average Error :
+      E[X] = 188.34657547604058, E[Y] = 102.95678034450229, E[Z] = 299.384164874788
+
+TDOA_CHAN Performance:
+    Variance Error:
+      V[X] = 11454.126487351097, V[Y] = 8542.864441764756, V[Z] = 57813.07270759022
+
+TDOA_CHAN_Raw_Data Total Execution Time:
+0.005739804807121268
